@@ -1,5 +1,7 @@
 package Чтение_файла;
 
+import java.util.List;
+
 public interface UserRead {
-    User readNewUser (String input);
+    List<User> readAllUsers();
 }

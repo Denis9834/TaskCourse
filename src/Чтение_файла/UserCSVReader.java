@@ -1,23 +1,51 @@
 package Чтение_файла;
 
-public class UserCSVReader implements UserRead{
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class UserCSVReader implements UserRead {
+    private Path filePath;
     private String separator;
 
-    public UserCSVReader(String separator) {
+    public UserCSVReader(Path filePath, String separator) {
+        this.filePath = filePath;
         this.separator = separator;
     }
 
-    @Override
-    public User readNewUser(String line) {
+    public List<String> splitLine(String line) {
         String[] arr = line.split(separator);
-        int id = Integer.parseInt(arr[0]);
-        String name = arr[1];
-        int waterCountDay = Integer.parseInt(arr[2]);
-        int waterCountNight = Integer.parseInt(arr[3]);
-        int gazCount = Integer.parseInt(arr[4]);
-        int electroCountDay = Integer.parseInt(arr[5]);
-        int electroCountNight = Integer.parseInt(arr[6]);
+        return Arrays.asList(arr);
+    }
 
-        return new User(id, name, waterCountDay, waterCountNight, gazCount, electroCountDay, electroCountNight);
+    @Override
+    public List<User> readAllUsers() {
+        List<User> users = new ArrayList<>();
+        try (BufferedReader reader = Files.newBufferedReader(filePath)) {
+            String header = reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                List<String> data = splitLine(line);
+                int id = Integer.parseInt(data.get(0));
+                String name = data.get(1);
+
+                int[] consumption = new int[data.size() - 2];
+
+                for (int i = 2; i < data.size() - 2; i++) {
+                    consumption[i -2] = Integer.parseInt(data.get(i));
+                }
+                User user = new User(
+                        id, name, consumption[0], consumption[1], consumption[2], consumption[3], consumption[4]);
+                users.add(user);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 }

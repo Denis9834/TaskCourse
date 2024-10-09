@@ -1,5 +1,7 @@
 package Чтение_файла;
 
+import java.util.List;
+
 public interface EcoCheck {
-    boolean isEcoUser (User user, double maxConsumption);
+    List<User> isEcoUser (List<User> users);
 }

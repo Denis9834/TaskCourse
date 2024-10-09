@@ -19,6 +19,14 @@ public class User {
         this.electroCountNight = electroCountNight;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public int getWaterCountDay() {
         return waterCountDay;
     }

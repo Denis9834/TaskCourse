@@ -1,8 +1,10 @@
 package Чтение_файла;
 
-public class JsonUserReader implements UserRead{
+import java.util.List;
+
+public class JsonUserReader implements UserRead {
     @Override
-    public User readNewUser(String input) {
-        return null;
+    public List<User> readAllUsers() {
+        return List.of();
     }
 }
