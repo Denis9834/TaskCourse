@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class UserCVSWriter implements UserWriter {
@@ -14,9 +15,18 @@ public class UserCVSWriter implements UserWriter {
         this.outputPath = createOutputFile(input);
     }
 
+    public void writeHeader(String header) {
+        try (BufferedWriter bufWriter = Files.newBufferedWriter(outputPath)) {
+            bufWriter.write(header);
+            bufWriter.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void write(List<User> users) {
-        try (BufferedWriter writer = Files.newBufferedWriter(outputPath)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(outputPath, StandardOpenOption.APPEND)) {
             for (User user : users) {
                 writer.write(
                         String.format("%d|%s|%d|%d|%d|%d|%d",

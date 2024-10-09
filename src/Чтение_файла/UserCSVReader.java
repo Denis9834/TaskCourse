@@ -12,6 +12,7 @@ import java.util.List;
 public class UserCSVReader implements UserRead {
     private Path filePath;
     private String separator;
+    private String header;
 
     public UserCSVReader(Path filePath, String separator) {
         this.filePath = filePath;
@@ -23,11 +24,18 @@ public class UserCSVReader implements UserRead {
         return Arrays.asList(arr);
     }
 
+    public String getHeader() {
+        return header;
+    }
+
     @Override
-    public List<User> readAllUsers() {
+    public List<User> readAllUsers(UserCVSWriter writer) {
         List<User> users = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(filePath)) {
-            String header = reader.readLine();
+            header = reader.readLine();
+            if (header != null) {
+                writer.writeHeader(header);
+            }
             String line;
             while ((line = reader.readLine()) != null) {
                 List<String> data = splitLine(line);
@@ -37,7 +45,7 @@ public class UserCSVReader implements UserRead {
                 int[] consumption = new int[data.size() - 2];
 
                 for (int i = 2; i < data.size() - 2; i++) {
-                    consumption[i -2] = Integer.parseInt(data.get(i));
+                    consumption[i - 2] = Integer.parseInt(data.get(i));
                 }
                 User user = new User(
                         id, name, consumption[0], consumption[1], consumption[2], consumption[3], consumption[4]);
