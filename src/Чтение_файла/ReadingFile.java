@@ -12,7 +12,7 @@ import java.util.List;
 public class ReadingFile {
     public static void main(String[] args) {
         Path input = Paths.get("C:\\Users\\Admin\\Desktop\\data.csv");
-        UserRead read = new UserCSVReader(input, "|");
+        UserRead read = new UserCSVReader(input, "\\|");
         EcoCheck ecoFilter = new EcoUserCheck(500);
         EcoCheck electricCheck = new NoElectricityCheck();
         UserWriter writer = new UserCVSWriter(input);

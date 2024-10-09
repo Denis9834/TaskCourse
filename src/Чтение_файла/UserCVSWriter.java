@@ -26,7 +26,7 @@ public class UserCVSWriter implements UserWriter {
                                 user.getElectroCountDay(), user.getElectroCountNight()));
                 writer.newLine();
             }
-            System.out.printf("Файл %s обновлен", outputPath.getFileName());
+            System.out.printf("Файл %s обновлен\n", outputPath.getFileName());
         } catch (IOException e) {
             System.out.println("Ошибка записи в файл: " + e.getMessage());
         }
