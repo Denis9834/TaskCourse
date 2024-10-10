@@ -3,15 +3,15 @@ package Чтение_файла;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EcoUserCheck implements EcoCheck {
+public class EcoUserFilter implements UserCheck {
     private double maxConsumption;
 
-    public EcoUserCheck(double maxConsumption) {
+    public EcoUserFilter(double maxConsumption) {
         this.maxConsumption = maxConsumption;
     }
 
     @Override
-    public List<User> isEcoUser(List<User> users) {
+    public List<User> check(List<User> users) {
         List<User> ecoUser = new ArrayList<>();
         for (User user : users) {
             int[] consumptions = {
