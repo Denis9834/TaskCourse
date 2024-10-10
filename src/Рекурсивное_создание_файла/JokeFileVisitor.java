@@ -6,21 +6,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 
-public class newFileDirectory {
-    public static void main(String[] args) {
-        //createFile(Path.of("C:\\Users\\Admin\\Desktop"));
-
-        Path directory = Path.of("C:\\Test");
-
-        if (Files.exists(directory) && Files.isDirectory(directory)) {
-            try {
-                recursive(directory);
-            } catch (IOException e) {
-                System.out.println("Error");
-                e.printStackTrace();
-            }
+public class JokeFileVisitor extends SimpleFileVisitor<Path> {
+    @Override
+    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+        if (exc == null) {
+            createFile(dir);
+            return FileVisitResult.CONTINUE;
         } else {
-            System.out.println("Путь не существует или не является директорией");
+            throw exc;
         }
     }
 
@@ -39,20 +32,6 @@ public class newFileDirectory {
         }
     }
 
-    private static void recursive(Path directory) throws IOException {
-        Files.walkFileTree(directory, new SimpleFileVisitor<>() {
-            @Override
-            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                if (exc == null) {
-                    createFile(dir);
-                    return FileVisitResult.CONTINUE;
-                } else {
-                    throw exc;
-                }
-            }
-        });
-    }
-
     private static String getText() {
         return "public class newFile {\n" +
                 "public static void main(String[] args) {\n" +
@@ -61,4 +40,3 @@ public class newFileDirectory {
                 "}";
     }
 }
-
