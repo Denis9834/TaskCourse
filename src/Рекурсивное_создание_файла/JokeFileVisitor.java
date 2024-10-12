@@ -17,7 +17,7 @@ public class JokeFileVisitor extends SimpleFileVisitor<Path> {
         }
     }
 
-    private static void createFile(Path directory) {
+    private void createFile(Path directory) {
         Path jokeFile = directory.resolve("joke.java");
 
         if (Files.exists(jokeFile)) {
@@ -32,7 +32,7 @@ public class JokeFileVisitor extends SimpleFileVisitor<Path> {
         }
     }
 
-    private static String getText() {
+    private String getText() {
         return "public class newFile {\n" +
                 "public static void main(String[] args) {\n" +
                 "System.out.println(\"Hello World\");\n" +
